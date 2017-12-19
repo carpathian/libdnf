@@ -89,14 +89,20 @@ subject_dealloc(_SubjectObject *self)
 static int
 subject_init(_SubjectObject *self, PyObject *args, PyObject *kwds)
 {
-    const char * pattern;
+    PyObject *py_pattern = NULL;
     PyObject *icase = NULL;
     const char *kwlist[] = { "pattern", "ignore_case", NULL };
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|O!", (char**) kwlist, &pattern,
-        &PyBool_Type, &icase)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|O!", (char**) kwlist,
+        &py_pattern, &PyBool_Type, &icase)) {
+        return -1;
+    }
+    PyObject *tmp_py_str = NULL;
+    const char * pattern = pycomp_get_string(py_pattern, &tmp_py_str);
+    if (!pattern) {
         return -1;
     }
     self->pattern = g_strdup(pattern);
+    Py_XDECREF(tmp_py_str);
     self->icase = icase != NULL && PyObject_IsTrue(icase);
     return 0;
 }
