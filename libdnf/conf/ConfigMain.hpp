@@ -145,6 +145,7 @@ public:
     OptionString & sslclientkey();
     OptionBool & deltarpm();
     OptionNumber<std::uint32_t> & deltarpm_percentage();
+    OptionStringList & extra_metadata();
 
 private:
     class Impl;
