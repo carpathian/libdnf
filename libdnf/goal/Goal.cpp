@@ -868,6 +868,7 @@ Goal::listBrokenDependencyPkgs(DnfPackageState pkg_type)
 
 std::vector<std::vector<std::string>> Goal::describeAllProblemRules(bool pkgs)
 {
+    printf("XXX describeAllProblemRules start\n");
     std::vector<std::vector<std::string>> output;
     int count_problems = countProblems();
     for (int i = 0; i < count_problems; i++) {
